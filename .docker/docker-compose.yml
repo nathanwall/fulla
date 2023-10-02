@@ -1,0 +1,20 @@
+version: '3'
+name: 'fulla'
+services:
+  fulla:
+    container_name: fulla
+    build: 
+      context: ..
+      dockerfile: .docker/Dockerfile
+    ports:
+      - '4701:3000'
+  database:
+    image: clue/json-server:latest
+    container_name: database
+    ports:
+      - '4702:80'
+    volumes:
+      - ~/storage/appdata/json-server/db.json:/data/db.json
+
+
+

@@ -6,11 +6,12 @@ import RetrieveText from './components/RetrieveText';
 import SubmitText from './components/SubmitText';
 import bcrypt from 'bcryptjs';
 import uuid from 'react-uuid';
+import { DB_SERVER } from './constants';
 
 function App() {
 
   const createRecord = async (data) => {
-    const res = await fetch('http://localhost:5000/texts', {
+    const res = await fetch(`http://${DB_SERVER.name}:${DB_SERVER.port}/texts`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -22,7 +23,7 @@ function App() {
   }
 
   const readRecord = async (identifier) => {
-    const res = await fetch('http://localhost:5000/texts?identifier=' + identifier, {
+    const res = await fetch(`http://${DB_SERVER.name}:${DB_SERVER.port}/texts?identifier=` + identifier, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -33,7 +34,7 @@ function App() {
   }
   
   const updateRecord = async (data) => {
-    const res = await fetch('http://localhost:5000/texts/' + data.id, {
+    const res = await fetch(`http://${DB_SERVER.name}:${DB_SERVER.port}/texts/` + data.id, {
       method: 'PATCH',
       headers: {
         'Content-type': 'application/json',
@@ -45,7 +46,7 @@ function App() {
   }
 
   const deleteRecord = async (data) => {
-    const res = await fetch('http://localhost:5000/texts/' + data.id, {
+    const res = await fetch(`http://${DB_SERVER.name}:${DB_SERVER.port}/texts/` + data.id, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json'
@@ -126,7 +127,7 @@ function App() {
       password: password.hash,
       attempts: 0
     }
-    
+
     const res = await createRecord(record);
 
     if (res.status === 201) {
@@ -138,7 +139,7 @@ function App() {
   
   return (
     <Router>
-      <div className="Container">
+      <div className="container-fluid" style={{display: 'flex', justifyContent: 'center'}}>
         <main>
           <Routes>
             <Route path="/" element={<SubmitText onAdd={addText} />} />
